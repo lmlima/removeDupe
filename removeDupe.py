@@ -11,9 +11,8 @@ df = df.applymap(lambda x: x.strip())
 # Same case
 df = df.applymap(lambda x: x.capitalize())
 
-df = df.drop_duplicates(subset=['Year', 'Title'], keep="first")
 # List of Year and Source
-df = df.groupby("Title").agg(lambda x: ', '.join(set(x))).reset_index()
+df = df.groupby(["Title", "Year"]).agg(lambda x: ', '.join(set(x))).reset_index()
 
 # Output
-df.to_csv(file_output, index=False, sep=";")
+df.to_csv(file_output, index=False, sep=";", columns=["Year","Source","Title"])
